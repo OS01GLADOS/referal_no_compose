@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль{% endblock %}
+
+
+{% block content %}
+    <h1>Профиль</h1>
+<div id="profile"></div>
+
+<script>
+const userId = "{{ user_id }}";
+
+const profiles_get = `/api/v1/users/${userId}/`
+
+const input_referral_code = "{% url 'input_referral' %}"
+
+fetch(profiles_get, {
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+})
+.then(r => r.json())
+.then(data => {
+    document.getElementById('profile').innerHTML = `
+        <p>ID: ${data.id}</p>
+        <p>Телефон: ${data.phone_number}</p>
+        <p>Реферальный код: ${data.referral_number}</p>
+        <p>Уже активировали код:</p>
+        <ul>${data.child_referrals.map(ch => `<li>${ch.phone_number}</li>`).join('')}</ul>
+        <a href=${input_referral_code}>активировать реферальный код</a>
+    `;
+});
+</script>
+
+{% endblock %}

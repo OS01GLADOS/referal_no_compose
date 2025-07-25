@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Реферальный код{% endblock %}
+
+
+{% block content %}
+
+    <h1>Ввод реферального кода</h1>
+<input type="text" id="code" placeholder="Введите код">
+<button onclick="sendCode()">Отправить</button>
+
+<script>
+    const referral_code_fetch = '/api/v1/users/input_referal_code/'
+
+function sendCode() {
+    const code = document.getElementById('code').value;
+    fetch(referral_code_fetch, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        body: JSON.stringify({code: code})
+    })
+.then(response => {
+    if (!response.ok) {
+        // Сервер вернул ошибку (например, 400 или 500)
+        throw new Error('Ошибка активации: ' + response.status);
+    }
+    return response.json();
+})
+.then(data => {
+    alert('Код успешно активирован!');
+    console.log(data);
+})
+.catch(error => {
+    alert('Не удалось активировать код. Попробуйте снова.');
+    console.error('Ошибка:', error);
+});
+}
+</script>
+
+{% endblock %}

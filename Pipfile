@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djangorestframework = "*"
+drf-spectacular = {extras = ["sidecar"], version = "*"}
+djangorestframework-simplejwt = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-django = "*"
+
+[requires]
+python_version = "3.11"
+python_full_version = "3.11.9"
+
+[scripts]
+runserver = "python manage.py runserver"
+tests = "pytest -rA"
+command = "python manage.py"
