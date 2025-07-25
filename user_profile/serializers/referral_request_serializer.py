@@ -10,7 +10,7 @@ class ReferralRequestSerializer(serializers.Serializer):
 
     def validate_code(self, value):
         try:
-            profile = check_referal_code(value)
+            profile = check_referral_code(value)
         except UserProfile.DoesNotExist:
             raise serializers.ValidationError("Неверный реферальный код")
         except ValueError:
